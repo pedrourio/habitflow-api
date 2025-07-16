@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   # ... other routes
   namespace :api do
     namespace :v1 do
-      resources :habits, only: [:index, :show, :create, :update, :destroy]
+      resources :habits, only: [:index, :show, :create, :update, :destroy] do
+        resources :checkins, only: [:index, :create, :destroy]
+      end
     end
   end
 end
