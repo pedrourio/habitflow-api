@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :habits, only: [:index, :show, :create, :update, :destroy] do
         resources :checkins, only: [:index, :create, :destroy]
       end
+      resource :profile, only: [:show, :update], controller: 'profiles'
     end
   end
 end
