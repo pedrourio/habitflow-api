@@ -6,7 +6,7 @@ class Api::V1::HabitsController < ApplicationController
 
   # GET /api/v1/habits
   def index
-    @habits = current_user.habits.order(created_at: :desc)
+    @habits = current_user.habits.includes(:checkins).order(created_at: :desc)
     render json: @habits
   end
 
@@ -26,10 +26,13 @@ class Api::V1::HabitsController < ApplicationController
     end
   end
 
+
+
   # PATCH/PUT /api/v1/habits/:id
   def update
     if @habit.update(habit_params)
-      render json: @habit
+      # Usamos o serializer para garantir que os check-ins sejam incluídos na resposta
+      render json: HabitSerializer.new(@habit).to_h_with_checkins.first
     else
       render json: { errors: @habit.errors.full_messages }, status: :unprocessable_entity
     end
