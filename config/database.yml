@@ -18,3 +18,15 @@ test:
   database: habitflow_test
   username: postgres
   password: password
+
+  production:
+    primary:
+      adapter: postgresql
+      encoding: unicode
+      pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+      # Estas variáveis serão configuradas no Elastic Beanstalk
+      host: <%= ENV["RDS_HOSTNAME"] %>
+      username: <%= ENV["RDS_USERNAME"] %>
+      password: <%= ENV["RDS_PASSWORD"] %>
+      database: <%= ENV["RDS_DB_NAME"] %>
+      port: <%= ENV["RDS_PORT"] %>
