@@ -1,29 +1,25 @@
 # config/database.yml
 
+# A seção padrão agora só contém configurações comuns a TODOS os bancos
 default: &default
-  adapter: postgresql
-  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 development:
   <<: *default
-  host: localhost
-  database: habitflow_development
-  username: postgres
-  password: password
+  adapter: sqlite3 # Define o SQLite APENAS para desenvolvimento
+  database: storage/development.sqlite3
 
 test:
   <<: *default
-  host: localhost
-  database: habitflow_test
-  username: postgres
-  password: password
+  adapter: sqlite3 # Define o SQLite APENAS para teste
+  database: storage/test.sqlite3
 
 production:
   primary:
-    adapter: postgresql
+    <<: *default
+    adapter: postgresql # Define o PostgreSQL APENAS para produção
     encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     host: <%= ENV["RDS_HOSTNAME"] %>
     username: <%= ENV["RDS_USERNAME"] %>
     password: <%= ENV["RDS_PASSWORD"] %>
