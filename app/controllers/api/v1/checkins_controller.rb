@@ -42,3 +42,5 @@ class Api::V1::CheckinsController < ApplicationController
     params.require(:checkin).permit(:date)
   end
 end
+
+#comentario teste
