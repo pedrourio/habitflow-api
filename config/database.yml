@@ -1,27 +1,21 @@
 # config/database.yml
 
-# A seção padrão agora só contém configurações comuns a TODOS os bancos
 default: &default
+  adapter: postgresql
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
 
 development:
   <<: *default
-  adapter: sqlite3 # Define o SQLite APENAS para desenvolvimento
+  adapter: sqlite3 #SQLite para desenvolvimento local ser mais fácil
   database: storage/development.sqlite3
 
 test:
   <<: *default
-  adapter: sqlite3 # Define o SQLite APENAS para teste
+  adapter: sqlite3
   database: storage/test.sqlite3
 
 production:
-  primary:
-    <<: *default
-    adapter: postgresql # Define o PostgreSQL APENAS para produção
-    encoding: unicode
-    host: <%= ENV["RDS_HOSTNAME"] %>
-    username: <%= ENV["RDS_USERNAME"] %>
-    password: <%= ENV["RDS_PASSWORD"] %>
-    database: <%= ENV["RDS_DB_NAME"] %>
-    port: <%= ENV["RDS_PORT"] %>
+  <<: *default
+  # O Render irá fornecer esta variável de ambiente
+  url: <%= ENV["DATABASE_URL"] %>
