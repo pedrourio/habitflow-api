@@ -16,6 +16,24 @@ test:
   database: storage/test.sqlite3
 
 production:
-  <<: *default
-  # O Render irá fornecer esta variável de ambiente
-  url: <%= ENV["DATABASE_URL"] %>
+  # Configuração para a aplicação principal (Active Record)
+  primary:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # Configuração para o Solid Cable (Action Cable)
+  cable:
+    adapter: postgresql
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # Configuração para o Solid Queue
+  solid_queue:
+    adapter: postgresql
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # Configuração para o Solid Cache
+  solid_cache:
+    adapter: postgresql
+    url: <%= ENV["DATABASE_URL"] %>
