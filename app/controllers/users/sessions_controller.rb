@@ -4,11 +4,7 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
   def create
-    # A linha abaixo usa o Warden para tentar autenticar.
-    # Se for sucesso, ele continua. Se falhar, ele aciona nossa CustomFailure app.
     warden.authenticate!(scope: :user)
-
-    # Se a autenticação foi bem-sucedida, o `current_user` estará disponível.
     render json: {
       status: { code: 200, message: 'Logged in successfully.' },
       data: UserSerializer.new(current_user).to_h
@@ -33,5 +29,9 @@ class Users::SessionsController < Devise::SessionsController
         message: "Couldn't find an active session."
       }, status: :unauthorized
     end
+  end
+
+  def auth_options
+    { scope: resource_name, recall: "#{controller_path}#new" }
   end
 end
