@@ -15,7 +15,6 @@ class Users::SessionsController < Devise::SessionsController
     }, status: :ok
   end
 
-  # A ação de logout permanece a mesma, pois é gerenciada pelo frontend
   # e a revogação do token é feita pelo middleware do devise-jwt.
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
