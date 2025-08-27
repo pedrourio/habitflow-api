@@ -19,7 +19,6 @@ class Api::V1::ProfilesController < ApplicationController
   private
 
   def profile_params
-    # Por enquanto, só permitimos a atualização do nome
     params.require(:user).permit(:name)
   end
 end

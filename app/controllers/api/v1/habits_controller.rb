@@ -31,7 +31,6 @@ class Api::V1::HabitsController < ApplicationController
   # PATCH/PUT /api/v1/habits/:id
   def update
     if @habit.update(habit_params)
-      # Usamos o serializer para garantir que os check-ins sejam incluídos na resposta
       render json: HabitSerializer.new(@habit).to_h_with_checkins.first
     else
       render json: { errors: @habit.errors.full_messages }, status: :unprocessable_entity
